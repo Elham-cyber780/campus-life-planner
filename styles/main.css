@@ -1,24 +1,61 @@
-
+```css
+/* Apply border-box sizing to every element */
 * {
     box-sizing: border-box;
 }
 
+/* Basic page styling */
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.6;
-    background-color: #f5f7fa;
+    background-color: #f4f4f4;
     color: #222222;
 }
 
+/* Style the header */
 header {
     background-color: #1e293b;
     color: white;
     padding: 16px;
 }
 
+/* Style the navigation links */
 nav a {
     color: #ffffff;
     padding: 8px;
 }
+
+/* Arrange navigation links in a wrapping row */
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Centre the main content */
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+/* Style each section as a card */
+section {
+    background-color: #ffffff;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+}
+
+/* Make keyboard focus clearly visible */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 3px;
+}
+```
 
