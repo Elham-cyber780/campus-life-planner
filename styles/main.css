@@ -1,4 +1,4 @@
-```css
+
 /* Apply border-box sizing to every element */
 * {
     box-sizing: border-box;
@@ -57,5 +57,57 @@ textarea:focus-visible {
     outline: 3px solid #f59e0b;
     outline-offset: 3px;
 }
-```
+
+
+@media (min-width: 768px) {
+    header {
+        padding: 24px 32px;
+    }
+
+    nav {
+        gap: 16px;
+    }
+
+    main {
+        padding: 24px;
+    }
+}
+
+```css
+/* Tablet: 768px and up */
+@media (min-width: 768px) {
+    header {
+        padding: 24px 32px;
+    }
+
+    nav {
+        gap: 16px;
+    }
+
+    main {
+        padding: 24px;
+    }
+}
+
+/* Desktop: 1024px and up */
+@media (min-width: 1024px) {
+    header {
+        padding: 32px 48px;
+    }
+
+    nav {
+        gap: 24px;
+    }
+
+    main {
+        padding: 32px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+
+
 
