@@ -11,3 +11,6 @@ export const datePattern = /^(?!0000)\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])
 // Allows letters, spaces, and hyphens, but not leading/trailing or consecutive separators.
 export const tagPattern = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
 
+
+// Catches repeated consecutive words, such as "the the", regardless of case.
+export const duplicateWordPattern = /\b(\w+)\s+\1\b/i;
