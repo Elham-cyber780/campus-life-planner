@@ -41,16 +41,33 @@
         </section>
 
         
+
 <section id="add-edit">
-    <h2>Add/Edit task</h2>
+    <h2>Add/Edit Task</h2>
     <p>Create a new task or update an existing one here.</p>
 
     <form>
         <label for="title">Title</label>
         <input type="text" id="title" name="title">
         <span id="title-error" aria-live="polite"></span>
+
+        <label for="dueDate">Due date</label>
+        <input type="text" id="dueDate" name="dueDate" placeholder="YYYY-MM-DD">
+        <span id="dueDate-error" aria-live="polite"></span>
+
+        <label for="duration">Duration (minutes)</label>
+        <input type="text" id="duration" name="duration">
+        <span id="duration-error" aria-live="polite"></span>
+
+        <label for="tag">Tag</label>
+        <input type="text" id="tag" name="tag">
+        <span id="tag-error" aria-live="polite"></span>
+
+        <button type="submit">Save</button>
     </form>
 </section>
+
+
 
 
 
