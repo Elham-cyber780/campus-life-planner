@@ -1,5 +1,11 @@
 
+
 import { titlePattern } from './validators.js';
 
-console.log(titlePattern.test("Lunch"));
-console.log(titlePattern.test(" Lunch"));
+const taskForm = document.querySelector("form");
+
+taskForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    console.log("Form submitted");
+});
+
