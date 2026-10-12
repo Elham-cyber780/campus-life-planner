@@ -1,9 +1,11 @@
 
+
 import {
     titlePattern,
     datePattern,
     numberPattern,
-    tagPattern
+    tagPattern,
+    duplicateWordPattern
 } from './validators.js';
 
 const taskForm = document.querySelector("form");
@@ -11,10 +13,9 @@ const taskForm = document.querySelector("form");
 taskForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    // Start by assuming all fields are valid
     let formIsValid = true;
 
-    // Title validation
+    // Title validation and duplicate-word warning
     const titleInput = document.querySelector("#title");
     const titleError = document.querySelector("#title-error");
 
@@ -22,6 +23,9 @@ taskForm.addEventListener("submit", function (event) {
         titleError.textContent =
             "Title cannot start or end with a space, or contain double spaces.";
         formIsValid = false;
+    } else if (duplicateWordPattern.test(titleInput.value)) {
+        titleError.textContent =
+            "Heads up: Your title contains a repeated word.";
     } else {
         titleError.textContent = "";
     }
@@ -61,7 +65,7 @@ taskForm.addEventListener("submit", function (event) {
         tagError.textContent = "";
     }
 
-    // Check whether every field passed validation
+    // Report whether all fields passed validation
     if (formIsValid) {
         console.log("All fields valid");
     }
