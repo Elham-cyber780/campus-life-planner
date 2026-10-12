@@ -1,5 +1,4 @@
 
-
 import {
     titlePattern,
     datePattern,
@@ -70,3 +69,19 @@ taskForm.addEventListener("submit", function (event) {
         console.log("All fields valid");
     }
 });
+
+// Load and display the seed data in the console
+fetch("./seed.json")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        return response.json();
+    })
+    .then(records => {
+        console.log(records);
+    })
+    .catch(error => {
+        console.error("Error loading seed data:", error);
+    });
