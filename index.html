@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
+
     <a href="#main">Skip to content</a>
 
     <header>
@@ -23,78 +24,133 @@
     </header>
 
     <main id="main">
+
         <section id="about">
             <h2>About</h2>
-            <p>Welcome to Campus Life Planner, a tool to help you organize your campus activities and tasks.</p>
-            <P><a href="mailto:e.abdulrahm@alustudent.com">e.abdulrahm@alustudent.com</a> </p>
-            <p><a href="https://github.com/Elham-cyber780">Github</a></p>
+
+            <p>
+                Welcome to Campus Life Planner! This tool helps students
+                organize their tasks, manage deadlines, and plan their
+                campus life more effectively.
+            </p>
+
+            <p>
+                My name is Elham Abdul Rahman Wumpini.
+            </p>
+
+            <p>
+                <a href="https://github.com/Elham-cyber780"
+                   target="_blank"
+                   rel="noopener noreferrer">Elham-cyber780</a>
+            </p>
+
+            <p>
+                <a href="mailto:e.abdulrahm@alustudent.com">My Email</a>
+            </p>
         </section>
 
         <section id="dashboard">
             <h2>Dashboard</h2>
-            <p>View an overview of your campus tasks and activities here.</p>
+
+            <p>View and manage your campus tasks here.</p>
         </section>
 
         <section id="records">
             <h2>Records</h2>
-            <p>View your saved tasks and activity records here.</p>
-            
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Due date</th>
-            <th scope="col">Duration</th>
-            <th scope="col">Tag</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody id="records-body">
-    </tbody>
-</table>
+
+            <label for="sort-select">Sort records by:</label>
+
+            <select id="sort-select">
+                <option value="date-asc">Date (earliest first)</option>
+                <option value="date-desc">Date (latest first)</option>
+                <option value="title-asc">Title (A to Z)</option>
+                <option value="title-desc">Title (Z to A)</option>
+                <option value="duration-asc">Duration (shortest first)</option>
+                <option value="duration-desc">Duration (longest first)</option>
+            </select>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Due date</th>
+                        <th scope="col">Duration (minutes)</th>
+                        <th scope="col">Tag</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="records-body">
+                </tbody>
+            </table>
         </section>
 
-        
+        <section id="add-edit">
+            <h2>Add/Edit task</h2>
 
-<section id="add-edit">
-    <h2>Add/Edit Task</h2>
-    <p>Create a new task or update an existing one here.</p>
+            <form novalidate>
+                <p>
+                    <label for="title">Task title:</label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        required
+                    >
+                    <span id="title-error" aria-live="polite"></span>
+                </p>
 
-    <form>
-        <label for="title">Title</label>
-        <input type="text" id="title" name="title">
-        <span id="title-error" aria-live="polite"></span>
+                <p>
+                    <label for="dueDate">Due date:</label>
+                    <input
+                        type="text"
+                        id="dueDate"
+                        name="dueDate"
+                        placeholder="YYYY-MM-DD"
+                        required
+                    >
+                    <span id="dueDate-error" aria-live="polite"></span>
+                </p>
 
-        <label for="dueDate">Due date</label>
-        <input type="text" id="dueDate" name="dueDate" placeholder="YYYY-MM-DD">
-        <span id="dueDate-error" aria-live="polite"></span>
+                <p>
+                    <label for="duration">Duration (minutes):</label>
+                    <input
+                        type="text"
+                        id="duration"
+                        name="duration"
+                        required
+                    >
+                    <span id="duration-error" aria-live="polite"></span>
+                </p>
 
-        <label for="duration">Duration (minutes)</label>
-        <input type="text" id="duration" name="duration">
-        <span id="duration-error" aria-live="polite"></span>
+                <p>
+                    <label for="tag">Tag:</label>
+                    <input
+                        type="text"
+                        id="tag"
+                        name="tag"
+                        required
+                    >
+                    <span id="tag-error" aria-live="polite"></span>
+                </p>
 
-        <label for="tag">Tag</label>
-        <input type="text" id="tag" name="tag">
-        <span id="tag-error" aria-live="polite"></span>
-
-        <button type="submit">Save</button>
-    </form>
-</section>
-
-
-
-
+                <button type="submit">Save task</button>
+            </form>
+        </section>
 
         <section id="settings">
             <h2>Settings</h2>
-            <p>Manage your Campus Life Planner preferences here.</p>
+
+            <p>Manage your planner preferences here.</p>
         </section>
+
     </main>
 
     <footer>
-        <p>Campus Life Planner — Organize your campus life.</p>
+        <p>Campus Life Planner - Helping students stay organized.</p>
     </footer>
+
     <script type="module" src="scripts/main.js"></script>
+
 </body>
 </html>
-
