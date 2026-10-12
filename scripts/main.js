@@ -12,6 +12,7 @@ let records = [];
 
 const taskForm = document.querySelector("form");
 
+// Form validation
 taskForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -73,46 +74,88 @@ taskForm.addEventListener("submit", function (event) {
     }
 });
 
-// Draw table rows from any list of records
+// Render records in the table
 function renderRecords(list) {
     const recordsBody = document.querySelector("#records-body");
 
-    // Clear existing rows before drawing again
+    // Clear existing rows before redrawing
     recordsBody.textContent = "";
 
     list.forEach(function (record) {
         const row = document.createElement("tr");
 
-        // Title cell
         const titleCell = document.createElement("td");
         titleCell.textContent = record.title;
         row.appendChild(titleCell);
 
-        // Due date cell
         const dueDateCell = document.createElement("td");
         dueDateCell.textContent = record.dueDate;
         row.appendChild(dueDateCell);
 
-        // Duration cell
         const durationCell = document.createElement("td");
         durationCell.textContent = record.duration;
         row.appendChild(durationCell);
 
-        // Tag cell
         const tagCell = document.createElement("td");
         tagCell.textContent = record.tag;
         row.appendChild(tagCell);
 
-        // Empty Actions cell for now
+        // Actions column remains empty for now
         const actionsCell = document.createElement("td");
         row.appendChild(actionsCell);
 
-        // Add the completed row to the table
         recordsBody.appendChild(row);
     });
 }
 
-// Load seed data, store it, and render the table
+// Sorting controls
+const sortSelect = document.querySelector("#sort-select");
+
+sortSelect.addEventListener("change", function () {
+    const sortValue = sortSelect.value;
+
+    switch (sortValue) {
+        case "date-asc":
+            records.sort(function (a, b) {
+                return a.dueDate.localeCompare(b.dueDate);
+            });
+            break;
+
+        case "date-desc":
+            records.sort(function (a, b) {
+                return b.dueDate.localeCompare(a.dueDate);
+            });
+            break;
+
+        case "title-asc":
+            records.sort(function (a, b) {
+                return a.title.localeCompare(b.title);
+            });
+            break;
+
+        case "title-desc":
+            records.sort(function (a, b) {
+                return b.title.localeCompare(a.title);
+            });
+            break;
+
+        case "duration-asc":
+            records.sort(function (a, b) {
+                return Number(a.duration) - Number(b.duration);
+            });
+            break;
+
+        case "duration-desc":
+            records.sort(function (a, b) {
+                return Number(b.duration) - Number(a.duration);
+            });
+            break;
+    }
+
+    renderRecords(records);
+});
+
+// Load seed data
 fetch("./seed.json")
     .then(response => {
         if (!response.ok) {
