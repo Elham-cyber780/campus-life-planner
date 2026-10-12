@@ -7,6 +7,9 @@ import {
     duplicateWordPattern
 } from './validators.js';
 
+// Master list of records
+let records = [];
+
 const taskForm = document.querySelector("form");
 
 taskForm.addEventListener("submit", function (event) {
@@ -70,7 +73,46 @@ taskForm.addEventListener("submit", function (event) {
     }
 });
 
-// Load seed data and display it in the Records table
+// Draw table rows from any list of records
+function renderRecords(list) {
+    const recordsBody = document.querySelector("#records-body");
+
+    // Clear existing rows before drawing again
+    recordsBody.textContent = "";
+
+    list.forEach(function (record) {
+        const row = document.createElement("tr");
+
+        // Title cell
+        const titleCell = document.createElement("td");
+        titleCell.textContent = record.title;
+        row.appendChild(titleCell);
+
+        // Due date cell
+        const dueDateCell = document.createElement("td");
+        dueDateCell.textContent = record.dueDate;
+        row.appendChild(dueDateCell);
+
+        // Duration cell
+        const durationCell = document.createElement("td");
+        durationCell.textContent = record.duration;
+        row.appendChild(durationCell);
+
+        // Tag cell
+        const tagCell = document.createElement("td");
+        tagCell.textContent = record.tag;
+        row.appendChild(tagCell);
+
+        // Empty Actions cell for now
+        const actionsCell = document.createElement("td");
+        row.appendChild(actionsCell);
+
+        // Add the completed row to the table
+        recordsBody.appendChild(row);
+    });
+}
+
+// Load seed data, store it, and render the table
 fetch("./seed.json")
     .then(response => {
         if (!response.ok) {
@@ -79,43 +121,10 @@ fetch("./seed.json")
 
         return response.json();
     })
-    .then(records => {
+    .then(loadedRecords => {
+        records = loadedRecords;
         console.log(records);
-
-        // Select the table body
-        const recordsBody = document.querySelector("#records-body");
-
-        // Create one table row for every record
-        records.forEach(record => {
-            const row = document.createElement("tr");
-
-            // Title cell
-            const titleCell = document.createElement("td");
-            titleCell.textContent = record.title;
-            row.appendChild(titleCell);
-
-            // Due date cell
-            const dueDateCell = document.createElement("td");
-            dueDateCell.textContent = record.dueDate;
-            row.appendChild(dueDateCell);
-
-            // Duration cell
-            const durationCell = document.createElement("td");
-            durationCell.textContent = record.duration;
-            row.appendChild(durationCell);
-
-            // Tag cell
-            const tagCell = document.createElement("td");
-            tagCell.textContent = record.tag;
-            row.appendChild(tagCell);
-
-            // Empty Actions cell for now
-            const actionsCell = document.createElement("td");
-            row.appendChild(actionsCell);
-
-            // Add the completed row to the table
-            recordsBody.appendChild(row);
-        });
+        renderRecords(records);
     })
     .catch(error => {
         console.error("Error loading seed data:", error);
