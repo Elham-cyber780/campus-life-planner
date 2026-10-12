@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tests</title>
+</head>
+<body>
+    <h1>Validator Tests</h1>
+
+    <ul id="results"></ul>
+
+    <script type="module">
+        import {
+            titlePattern,
+            numberPattern,
+            datePattern,
+            tagPattern,
+            duplicateWordPattern
+        } from "./scripts/validators.js";
+
+        const results = document.querySelector("#results");
+
+        function check(description, pattern, value, expected) {
+            const actual = pattern.test(value);
+            const passed = actual === expected;
+
+            const item = document.createElement("li");
+            item.textContent =
+                `${passed ? "PASS" : "FAIL"}: ${description} — ` +
+                `expected ${expected}, got ${actual}`;
+
+            results.appendChild(item);
+        }
+
+        // 1. Title pattern
+        check("Title: Lunch is valid", titlePattern, "Lunch", true);
+        check("Title: leading space is invalid", titlePattern, " Lunch", false);
+        check("Title: empty value is invalid", titlePattern, "", false);
+        check("Title: trailing space is invalid", titlePattern, "Lunch ", false);
+
+        // 2. Number pattern
+        check("Number: 90 is valid", numberPattern, "90", true);
+        check("Number: 007 is invalid", numberPattern, "007", false);
+        check("Number: 12.50 is valid", numberPattern, "12.50", true);
+        check("Number: negative number is invalid", numberPattern, "-5", false);
+
+        // 3. Date pattern
+        check("Date: 2026-10-18 is valid", datePattern, "2026-10-18", true);
+        check("Date: invalid month is rejected", datePattern, "2026-13-01", false);
+        check("Date: invalid month format is rejected", datePattern, "2026-1-01", false);
+        check("Date: wrong format is rejected", datePattern, "18-10-2026", false);
+
+        // 4. Tag pattern
+        check("Tag: study is valid", tagPattern, "study", true);
+        check("Tag: study-group is valid", tagPattern, "study-group", true);
+        check("Tag: underscore is invalid", tagPattern, "study_group", false);
+        check("Tag: digits are invalid", tagPattern, "study123", false);
+
+        // 5. Duplicate word pattern
+        check(
+            "Duplicate word: repeated the is detected",
+            duplicateWordPattern,
+            "Read the the assigned chapter",
+            true
+        );
+        check(
+            "Duplicate word: normal sentence has no duplicate",
+            duplicateWordPattern,
+            "Read the assigned chapter",
+            false
+        );
+        check(
+            "Duplicate word: repeated word with different case is detected",
+            duplicateWordPattern,
+            "Read the THE assigned chapter",
+            true
+        );
+        check(
+            "Duplicate word: different words are not duplicates",
+            duplicateWordPattern,
+            "Read the new chapter",
+            false
+        );
+    </script>
+</body>
+</html>
