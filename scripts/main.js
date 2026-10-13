@@ -5,170 +5,230 @@ import {
     numberPattern,
     tagPattern,
     duplicateWordPattern
-} from './validators.js';
+} from "./validators.js";
 
-// Master list of records
+import { compileRegex } from "./search.js";
+
 let records = [];
 
-const taskForm = document.querySelector("form");
+const taskForm = document.querySelector("#task-form");
+const sortSelect = document.querySelector("#sort-select");
+const searchBox = document.querySelector("#search-input");
+const caseBox = document.querySelector("#case-toggle");
+const searchStatus = document.querySelector("#search-status");
+const recordsBody = document.querySelector("#records-body");
 
-// Form validation
-taskForm.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    let formIsValid = true;
-
-    // Title validation and duplicate-word warning
-    const titleInput = document.querySelector("#title");
-    const titleError = document.querySelector("#title-error");
-
-    if (!titlePattern.test(titleInput.value)) {
-        titleError.textContent =
-            "Title cannot start or end with a space, or contain double spaces.";
-        formIsValid = false;
-    } else if (duplicateWordPattern.test(titleInput.value)) {
-        titleError.textContent =
-            "Heads up: Your title contains a repeated word.";
-    } else {
-        titleError.textContent = "";
-    }
-
-    // Due date validation
-    const dueDateInput = document.querySelector("#dueDate");
-    const dueDateError = document.querySelector("#dueDate-error");
-
-    if (!datePattern.test(dueDateInput.value)) {
-        dueDateError.textContent = "Use the format YYYY-MM-DD.";
-        formIsValid = false;
-    } else {
-        dueDateError.textContent = "";
-    }
-
-    // Duration validation
-    const durationInput = document.querySelector("#duration");
-    const durationError = document.querySelector("#duration-error");
-
-    if (!numberPattern.test(durationInput.value)) {
-        durationError.textContent =
-            "Enter minutes as a number, e.g. 90 or 7.5.";
-        formIsValid = false;
-    } else {
-        durationError.textContent = "";
-    }
-
-    // Tag validation
-    const tagInput = document.querySelector("#tag");
-    const tagError = document.querySelector("#tag-error");
-
-    if (!tagPattern.test(tagInput.value)) {
-        tagError.textContent =
-            "Letters, spaces and hyphens only.";
-        formIsValid = false;
-    } else {
-        tagError.textContent = "";
-    }
-
-    // Report whether all fields passed validation
-    if (formIsValid) {
-        console.log("All fields valid");
-    }
-});
-
-// Render records in the table
+// Display records in the table.
 function renderRecords(list) {
-    const recordsBody = document.querySelector("#records-body");
-
-    // Clear existing rows before redrawing
-    recordsBody.textContent = "";
+    recordsBody.innerHTML = "";
 
     list.forEach(function (record) {
         const row = document.createElement("tr");
 
         const titleCell = document.createElement("td");
         titleCell.textContent = record.title;
-        row.appendChild(titleCell);
 
-        const dueDateCell = document.createElement("td");
-        dueDateCell.textContent = record.dueDate;
-        row.appendChild(dueDateCell);
+        const dateCell = document.createElement("td");
+        dateCell.textContent = record.dueDate;
 
         const durationCell = document.createElement("td");
         durationCell.textContent = record.duration;
-        row.appendChild(durationCell);
 
         const tagCell = document.createElement("td");
         tagCell.textContent = record.tag;
-        row.appendChild(tagCell);
 
-        // Actions column remains empty for now
         const actionsCell = document.createElement("td");
+
+        row.appendChild(titleCell);
+        row.appendChild(dateCell);
+        row.appendChild(durationCell);
+        row.appendChild(tagCell);
         row.appendChild(actionsCell);
 
         recordsBody.appendChild(row);
     });
 }
 
-// Sorting controls
-const sortSelect = document.querySelector("#sort-select");
+// Sort a copy of the records so the original list remains unchanged.
+function getSortedRecords(list) {
+    const sortedRecords = [...list];
 
-sortSelect.addEventListener("change", function () {
-    const sortValue = sortSelect.value;
-
-    switch (sortValue) {
+    switch (sortSelect.value) {
         case "date-asc":
-            records.sort(function (a, b) {
+            sortedRecords.sort(function (a, b) {
                 return a.dueDate.localeCompare(b.dueDate);
             });
             break;
 
         case "date-desc":
-            records.sort(function (a, b) {
+            sortedRecords.sort(function (a, b) {
                 return b.dueDate.localeCompare(a.dueDate);
             });
             break;
 
         case "title-asc":
-            records.sort(function (a, b) {
+            sortedRecords.sort(function (a, b) {
                 return a.title.localeCompare(b.title);
             });
             break;
 
         case "title-desc":
-            records.sort(function (a, b) {
+            sortedRecords.sort(function (a, b) {
                 return b.title.localeCompare(a.title);
             });
             break;
 
         case "duration-asc":
-            records.sort(function (a, b) {
+            sortedRecords.sort(function (a, b) {
                 return Number(a.duration) - Number(b.duration);
             });
             break;
 
         case "duration-desc":
-            records.sort(function (a, b) {
+            sortedRecords.sort(function (a, b) {
                 return Number(b.duration) - Number(a.duration);
             });
             break;
     }
 
-    renderRecords(records);
+    return sortedRecords;
+}
+
+// Filter records by searching their titles and tags.
+function filterRecords() {
+    const pattern = searchBox.value;
+    const flags = caseBox.checked ? "i" : "";
+    const regex = compileRegex(pattern, flags);
+
+    // An empty search shows every record.
+    if (pattern === "") {
+        searchStatus.textContent =
+            records.length + (records.length === 1 ? " match" : " matches");
+
+        renderRecords(getSortedRecords(records));
+        return;
+    }
+
+    // An invalid pattern shows an error without changing the table.
+    if (regex === null) {
+        searchStatus.textContent = "Invalid pattern";
+        return;
+    }
+
+    const matches = records.filter(function (record) {
+        const title = String(record.title);
+        const tag = String(record.tag);
+
+        regex.lastIndex = 0;
+        const titleMatches = regex.test(title);
+
+        regex.lastIndex = 0;
+        const tagMatches = regex.test(tag);
+
+        return titleMatches || tagMatches;
+    });
+
+    searchStatus.textContent =
+        matches.length + (matches.length === 1 ? " match" : " matches");
+
+    renderRecords(getSortedRecords(matches));
+}
+
+searchBox.addEventListener("input", filterRecords);
+caseBox.addEventListener("change", filterRecords);
+sortSelect.addEventListener("change", filterRecords);
+
+// Check a value against a regular expression.
+function matchesPattern(pattern, value) {
+    pattern.lastIndex = 0;
+    return pattern.test(value);
+}
+
+// Display a validation message beside its field.
+function setError(id, message) {
+    document.querySelector("#" + id + "-error").textContent = message;
+}
+
+// Validate the form when the user submits it.
+taskForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Keep the original input so the regex can detect spaces.
+    const title = document.querySelector("#title").value;
+    const dueDate = document.querySelector("#dueDate").value;
+    const duration = document.querySelector("#duration").value;
+    const tag = document.querySelector("#tag").value;
+
+    let formIsValid = true;
+
+    // Validate the title.
+    if (!matchesPattern(titlePattern, title)) {
+        setError(
+            "title",
+            "Enter a valid task title. Do not start or end with spaces."
+        );
+        formIsValid = false;
+    } else if (matchesPattern(duplicateWordPattern, title)) {
+        setError(
+            "title",
+            "Heads up: your title contains a repeated word."
+        );
+    } else {
+        setError("title", "");
+    }
+
+    // Validate the date.
+    if (!matchesPattern(datePattern, dueDate)) {
+        setError(
+            "dueDate",
+            "Use the format YYYY-MM-DD and enter a valid date."
+        );
+        formIsValid = false;
+    } else {
+        setError("dueDate", "");
+    }
+
+    // Validate the duration.
+    if (!matchesPattern(numberPattern, duration)) {
+        setError(
+            "duration",
+            "Enter a valid duration in minutes using numbers only."
+        );
+        formIsValid = false;
+    } else {
+        setError("duration", "");
+    }
+
+    // Validate the tag.
+    if (!matchesPattern(tagPattern, tag)) {
+        setError(
+            "tag",
+            "Enter a valid tag using the required tag format."
+        );
+        formIsValid = false;
+    } else {
+        setError("tag", "");
+    }
+
+    if (formIsValid) {
+        console.log("All fields valid");
+    }
 });
 
-// Load seed data
+// Load the initial records from seed.json.
 fetch("./seed.json")
-    .then(response => {
+    .then(function (response) {
         if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
+            throw new Error("Could not load seed.json");
         }
 
         return response.json();
     })
-    .then(loadedRecords => {
+    .then(function (loadedRecords) {
         records = loadedRecords;
-        console.log(records);
-        renderRecords(records);
+        filterRecords();
     })
-    .catch(error => {
-        console.error("Error loading seed data:", error);
+    .catch(function (error) {
+        console.error("Error loading records:", error);
+        searchStatus.textContent = "Could not load records.";
     });

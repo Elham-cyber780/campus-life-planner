@@ -13,7 +13,6 @@
 
     <header>
         <h1>Campus Life Planner</h1>
-
         <nav>
             <a href="#about">About</a>
             <a href="#dashboard">Dashboard</a>
@@ -24,26 +23,19 @@
     </header>
 
     <main id="main">
-
         <section id="about">
             <h2>About</h2>
-
             <p>
                 Welcome to Campus Life Planner! This tool helps students
-                organize their tasks, manage deadlines, and plan their
-                campus life more effectively.
+                organize their tasks, manage deadlines, and plan campus
+                life more effectively.
             </p>
-
-            <p>
-                My name is Elham Abdul Rahman Wumpini.
-            </p>
-
+            <p>My name is Elham Abdul Rahman Wumpini.</p>
             <p>
                 <a href="https://github.com/Elham-cyber780"
                    target="_blank"
-                   rel="noopener noreferrer">Elham-cyber780</a>
+                   rel="noopener noreferrer">My GitHub</a>
             </p>
-
             <p>
                 <a href="mailto:e.abdulrahm@alustudent.com">My Email</a>
             </p>
@@ -51,23 +43,39 @@
 
         <section id="dashboard">
             <h2>Dashboard</h2>
-
             <p>View and manage your campus tasks here.</p>
         </section>
 
         <section id="records">
             <h2>Records</h2>
 
-            <label for="sort-select">Sort records by:</label>
+            <p>
+                <label for="sort-select">Sort records by:</label>
+                <select id="sort-select">
+                    <option value="date-asc">Date (earliest first)</option>
+                    <option value="date-desc">Date (latest first)</option>
+                    <option value="title-asc">Title (A to Z)</option>
+                    <option value="title-desc">Title (Z to A)</option>
+                    <option value="duration-asc">Duration (shortest first)</option>
+                    <option value="duration-desc">Duration (longest first)</option>
+                </select>
+            </p>
 
-            <select id="sort-select">
-                <option value="date-asc">Date (earliest first)</option>
-                <option value="date-desc">Date (latest first)</option>
-                <option value="title-asc">Title (A to Z)</option>
-                <option value="title-desc">Title (Z to A)</option>
-                <option value="duration-asc">Duration (shortest first)</option>
-                <option value="duration-desc">Duration (longest first)</option>
-            </select>
+            <p>
+                <label for="search-input">Search records using regex:</label>
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Enter a regex pattern"
+                >
+            </p>
+
+            <p>
+                <input type="checkbox" id="case-toggle" checked>
+                <label for="case-toggle">Case-insensitive search</label>
+            </p>
+
+            <p id="search-status" role="status" aria-live="polite"></p>
 
             <table>
                 <thead>
@@ -79,24 +87,17 @@
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
-
-                <tbody id="records-body">
-                </tbody>
+                <tbody id="records-body"></tbody>
             </table>
         </section>
 
         <section id="add-edit">
             <h2>Add/Edit task</h2>
 
-            <form novalidate>
+            <form id="task-form" novalidate>
                 <p>
                     <label for="title">Task title:</label>
-                    <input
-                        type="text"
-                        id="title"
-                        name="title"
-                        required
-                    >
+                    <input type="text" id="title" name="title" required>
                     <span id="title-error" aria-live="polite"></span>
                 </p>
 
@@ -114,23 +115,13 @@
 
                 <p>
                     <label for="duration">Duration (minutes):</label>
-                    <input
-                        type="text"
-                        id="duration"
-                        name="duration"
-                        required
-                    >
+                    <input type="text" id="duration" name="duration" required>
                     <span id="duration-error" aria-live="polite"></span>
                 </p>
 
                 <p>
                     <label for="tag">Tag:</label>
-                    <input
-                        type="text"
-                        id="tag"
-                        name="tag"
-                        required
-                    >
+                    <input type="text" id="tag" name="tag" required>
                     <span id="tag-error" aria-live="polite"></span>
                 </p>
 
@@ -140,10 +131,8 @@
 
         <section id="settings">
             <h2>Settings</h2>
-
             <p>Manage your planner preferences here.</p>
         </section>
-
     </main>
 
     <footer>
@@ -151,6 +140,5 @@
     </footer>
 
     <script type="module" src="scripts/main.js"></script>
-
 </body>
 </html>
