@@ -109,7 +109,7 @@ function filterRecords() {
         return;
     }
 
-    // An invalid pattern shows an error without changing the table.
+    // An invalid pattern shows an error.
     if (regex === null) {
         searchStatus.textContent = "Invalid pattern";
         return;
@@ -149,11 +149,10 @@ function setError(id, message) {
     document.querySelector("#" + id + "-error").textContent = message;
 }
 
-// Validate the form when the user submits it.
+// Validate the form and add a task when all required fields are valid.
 taskForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    // Keep the original input so the regex can detect spaces.
     const title = document.querySelector("#title").value;
     const dueDate = document.querySelector("#dueDate").value;
     const duration = document.querySelector("#duration").value;
@@ -173,6 +172,7 @@ taskForm.addEventListener("submit", function (event) {
             "title",
             "Heads up: your title contains a repeated word."
         );
+        // This is a warning, so it does not make the form invalid.
     } else {
         setError("title", "");
     }
@@ -210,8 +210,35 @@ taskForm.addEventListener("submit", function (event) {
         setError("tag", "");
     }
 
+    // Add the new task only if all fields are valid.
     if (formIsValid) {
-        console.log("All fields valid");
+        const now = new Date().toISOString();
+
+        const newRecord = {
+            id: "task_" + Date.now(),
+            title: title.trim(),
+            dueDate: dueDate,
+            duration: Number(duration),
+            tag: tag.trim(),
+            createdAt: now,
+            updatedAt: now
+        };
+
+        records.push(newRecord);
+
+        // Refresh the table using the current search and sort.
+        filterRecords();
+
+        // Clear the form after adding the task.
+        taskForm.reset();
+
+        // Clear the old validation messages.
+        setError("title", "");
+        setError("dueDate", "");
+        setError("duration", "");
+        setError("tag", "");
+
+        console.log("Task added successfully");
     }
 });
 
