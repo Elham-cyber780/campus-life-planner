@@ -1,10 +1,10 @@
 
-/* Apply border-box sizing to all elements */
+/* Apply border-box sizing to every element */
 * {
     box-sizing: border-box;
 }
 
-/* Base page styles */
+/* Basic page styling */
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -13,82 +13,48 @@ body {
     color: #222222;
 }
 
-/* Header styles */
+/* Style the header */
 header {
-    background-color: #1f2937;
+    background-color: #1e293b;
     color: white;
     padding: 16px;
 }
 
-/* Navigation links */
+/* Style the navigation links */
 nav a {
-    color: white;
-    text-decoration: none;
+    color: #ffffff;
     padding: 8px;
 }
 
-/* Navigation layout */
+/* Arrange navigation links in a wrapping row */
 nav {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-/* Main content */
+/* Centre the main content */
 main {
-    max-width: 1100px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 16px;
 }
 
-/* Content sections */
+/* Style each section as a card */
 section {
-    background-color: white;
-    border-radius: 8px;
+    background-color: #ffffff;
     padding: 16px;
     margin-bottom: 16px;
+    border-radius: 8px;
 }
 
-/* Visible keyboard focus */
-a:focus,
-button:focus,
-input:focus,
-select:focus,
-textarea:focus {
-    outline: 2px solid #3b82f6;
-    outline-offset: 2px;
+/* Make keyboard focus clearly visible */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 3px;
 }
 
-/* Tablet: 768px and up */
-@media (min-width: 768px) {
-    header {
-        padding: 24px 32px;
-    }
-
-    nav {
-        gap: 16px;
-    }
-
-    main {
-        padding: 24px;
-    }
-}
-
-/* Desktop: 1024px and up */
-@media (min-width: 1024px) {
-    header {
-        padding: 32px 48px;
-    }
-
-    nav {
-        gap: 24px;
-    }
-
-    main {
-        padding: 32px;
-    }
-
-    h1 {
-        font-size: 2.5rem;
-    }
-}
