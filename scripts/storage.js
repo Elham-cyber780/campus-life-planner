@@ -44,4 +44,4 @@ export function clearRecords() {
         console.error("Could not clear records:", error);
         return false;
     }
-}-
+}
