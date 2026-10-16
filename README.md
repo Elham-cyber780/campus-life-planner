@@ -19,9 +19,13 @@ Campus Life Planner supports student productivity by keeping task information or
 - **Form validation:** Validate titles, dates, durations, and tags before saving.
 - **Browser storage:** Save records in `localStorage` so they can persist between visits in the same browser.
 - **Sample data:** Load initial records from `seed.json` when suitable saved records are unavailable.
-- **Accessibility:** Use semantic HTML, labelled form controls, keyboard-focus indicators, and status messages.
+- **Accessibility:** Responsive layouts with breakpoints for mobile, tablet, and desktop screen sizes.
+Hover and interactiob transitions, with reduced-mpotion preferences respected 
+JSON import/export status messages announced through an accessible status region
+JSON EXPORT: Download saved task recoeds as a JSON file.
+JSON import: Import previously exported JSON records, validate the data, and report errors without replacing exisiting records when validation or saving fails.
 
-**Not yet verified:** JSON file import/export and responsive behavior at all required breakpoints. Confirm these features before describing them as complete.
+**Verified functionality:** Task management,search and sorting,browser storage, JSON import/export,and responsive layout have been tested manually.Automated tests have also been run. See the testing checklist below for the scope of verification.
 
 ## Technologies
 
@@ -113,6 +117,12 @@ Before submission, verify the following manually:
 - Confirm that search highlighting matches the results.
 - Test the page at mobile, tablet, and desktop widths.
 - Test keyboard navigation and visible focus indicators.
+- Confirmed adding, editing. and deleting tasks
+- Confirmed search, sorting, and persistence after refreshing the page.
+Confirmed JSON export and valoid JSON import
+Confirmed that invalid JSON is rejected and an error message
+Checked the layout at 375px, 768px, and 1280px viewport widths
+Ran the automated test page, with 20 tests passing 
 
 ## Known limitations
 
