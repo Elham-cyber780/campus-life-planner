@@ -8,98 +8,104 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-
     <a href="#main">Skip to content</a>
 
     <header>
         <h1>Campus Life Planner</h1>
-        <nav>
-            <a href="#about">About</a>
-            <a href="#dashboard">Dashboard</a>
-            <a href="#records">Records</a>
-            <a href="#add-edit">Add/Edit task</a>
-            <a href="#settings">Settings</a>
+
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#records">Records</a></li>
+                <li><a href="#add-edit">Add/Edit task</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
         </nav>
     </header>
 
     <main id="main">
-        <section id="about">
-            <h2>About</h2>
+        <section id="about" aria-labelledby="about-heading">
+            <h2 id="about-heading">About</h2>
             <p>
-                Welcome to Campus Life Planner! This tool helps students
-                organize their tasks, manage deadlines, and plan campus
-                life more effectively.
-            </p>
-            <p>My name is Elham Abdul Rahman Wumpini.</p>
-            <p>
-                <a href="https://github.com/Elham-cyber780"
-                   target="_blank"
-                   rel="noopener noreferrer">My GitHub</a>
+                Campus Life Planner helps students organize tasks, track
+                deadlines, and manage the time they spend on their activities.
             </p>
             <p>
-                <a href="mailto:e.abdulrahm@alustudent.com">My Email</a>
+                Created by: Abdul Rahman Elham Wumpini
+            </p>
+            <p>
+                GitHub:
+                <a href="https://github.com/Elham-cyber780">
+                    Elham-cyber780
+                </a>
             </p>
         </section>
 
-    
-<section id="dashboard">
-    <h2>Dashboard</h2>
-
-    <article>
-        <h3>Total Records</h3>
-        <p id="total-records">0</p>
-    </article>
-
-    <article>
-        <h3>Total Duration</h3>
-        <p id="total-duration">0 minutes</p>
-    </article>
-
-    <article>
-        <h3>Most-Used Tag</h3>
-        <p id="top-tag">No tags yet</p>
-    </article>
-
-    <article>
-        <h3>Tasks Created in the Last 7 Days</h3>
-        <ul id="weekly-trend">
-            <li>Statistics will appear here.</li>
-        </ul>
-    </article>
-</section>
-
-        <section id="records">
-            <h2>Records</h2>
+        <section id="dashboard" aria-labelledby="dashboard-heading">
+            <h2 id="dashboard-heading">Dashboard</h2>
 
             <p>
-                <label for="sort-select">Sort records by:</label>
-                <select id="sort-select">
-                    <option value="date-asc">Date (earliest first)</option>
-                    <option value="date-desc">Date (latest first)</option>
-                    <option value="title-asc">Title (A to Z)</option>
-                    <option value="title-desc">Title (Z to A)</option>
-                    <option value="duration-asc">Duration (shortest first)</option>
-                    <option value="duration-desc">Duration (longest first)</option>
-                </select>
+                Total records:
+                <strong id="total-records">0</strong>
             </p>
 
             <p>
-                <label for="search-input">Search records using regex:</label>
-                <input
-                    type="text"
-                    id="search-input"
-                    placeholder="Enter a regex pattern"
-                >
+                Total duration:
+                <strong id="total-duration">0</strong> minutes
             </p>
 
             <p>
-                <input type="checkbox" id="case-toggle" checked>
-                <label for="case-toggle">Case-insensitive search</label>
+                Most used tag:
+                <strong id="top-tag">None</strong>
             </p>
 
-            <p id="search-status" role="status" aria-live="polite"></p>
+            <h3>Tasks created in the last 7 days</h3>
+            <div
+                id="weekly-trend"
+                role="img"
+                aria-label="Chart showing tasks created during the last seven days"
+            ></div>
+        </section>
+
+        <section id="records" aria-labelledby="records-heading">
+            <h2 id="records-heading">Records</h2>
+
+            <label for="search-input">Search using a regular expression</label>
+            <input
+                type="text"
+                id="search-input"
+                name="search"
+                placeholder="Example: study|reading"
+                aria-describedby="search-help"
+            >
+
+            <p id="search-help">
+                Enter a regular expression to search task titles and tags.
+                For example, study|reading matches either word.
+            </p>
+
+            <label for="case-toggle">
+                Match uppercase and lowercase letters exactly
+            </label>
+            <input type="checkbox" id="case-toggle" name="case-toggle">
+
+            <label for="sort-select">Sort records by</label>
+            <select id="sort-select" name="sort">
+                <option value="date-asc">Due date: earliest first</option>
+                <option value="date-desc">Due date: latest first</option>
+                <option value="title-asc">Title: A to Z</option>
+                <option value="title-desc">Title: Z to A</option>
+                <option value="duration-asc">Duration: lowest first</option>
+                <option value="duration-desc">Duration: highest first</option>
+            </select>
+
+            <p id="search-status" role="status" aria-live="polite">
+                Your records will appear below.
+            </p>
 
             <table>
+                <caption>Saved campus tasks</caption>
                 <thead>
                     <tr>
                         <th scope="col">Title</th>
@@ -109,56 +115,131 @@
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
-                <tbody id="records-body"></tbody>
+                <tbody id="records-body">
+                    <!-- Task rows are added by JavaScript. -->
+                </tbody>
             </table>
         </section>
 
-        <section id="add-edit">
-            <h2>Add/Edit task</h2>
+        <section id="add-edit" aria-labelledby="form-heading">
+            <h2 id="form-heading">Add or Edit a Task</h2>
 
             <form id="task-form" novalidate>
                 <p>
-                    <label for="title">Task title:</label>
-                    <input type="text" id="title" name="title" required>
-                    <span id="title-error" aria-live="polite"></span>
-                </p>
-
-                <p>
-                    <label for="dueDate">Due date:</label>
+                    <label for="title">Task title</label>
                     <input
                         type="text"
+                        id="title"
+                        name="title"
+                        required
+                        aria-describedby="title-error"
+                    >
+                    <span
+                        id="title-error"
+                        aria-live="polite"
+                    ></span>
+                </p>
+
+                <p>
+                    <label for="dueDate">Due date</label>
+                    <input
+                        type="date"
                         id="dueDate"
                         name="dueDate"
-                        placeholder="YYYY-MM-DD"
                         required
+                        aria-describedby="dueDate-error"
                     >
-                    <span id="dueDate-error" aria-live="polite"></span>
+                    <span
+                        id="dueDate-error"
+                        aria-live="polite"
+                    ></span>
                 </p>
 
                 <p>
-                    <label for="duration">Duration (minutes):</label>
-                    <input type="text" id="duration" name="duration" required>
-                    <span id="duration-error" aria-live="polite"></span>
+                    <label for="duration">Duration in minutes</label>
+                    <input
+                        type="number"
+                        id="duration"
+                        name="duration"
+                        min="0"
+                        step="0.01"
+                        required
+                        aria-describedby="duration-error"
+                    >
+                    <span
+                        id="duration-error"
+                        aria-live="polite"
+                    ></span>
                 </p>
 
                 <p>
-                    <label for="tag">Tag:</label>
-                    <input type="text" id="tag" name="tag" required>
-                    <span id="tag-error" aria-live="polite"></span>
+                    <label for="tag">Tag</label>
+                    <input
+                        type="text"
+                        id="tag"
+                        name="tag"
+                        required
+                        aria-describedby="tag-error"
+                    >
+                    <span
+                        id="tag-error"
+                        aria-live="polite"
+                    ></span>
                 </p>
 
                 <button type="submit">Save task</button>
             </form>
         </section>
 
-        <section id="settings">
-            <h2>Settings</h2>
-            <p>Manage your planner preferences here.</p>
+        <section id="settings" aria-labelledby="settings-heading">
+            <h2 id="settings-heading">Settings</h2>
+            <p>
+                Task durations are recorded in minutes. To convert minutes
+                to hours, divide the number of minutes by 60.
+            </p>
+            <p>
+                Example: 120 minutes equals 2 hours.
+            </p>
+
+            
+<h3>Data Management</h3>
+
+<p>
+    Export your saved tasks to a JSON file, or import tasks
+    from a previously exported JSON file.
+</p>
+
+<p>
+    <button type="button" id="export-json">
+        Export JSON
+    </button>
+</p>
+
+<p>
+    <label for="import-json">Choose a JSON file to import</label>
+    <input
+        type="file"
+        id="import-json"
+        name="import-json"
+        accept=".json,application/json"
+    >
+</p>
+
+<p>
+    <button type="button" id="import-json-button">
+        Import JSON
+    </button>
+</p>
+
+<p id="import-export-status" role="status" aria-live="polite">
+    No import or export action performed yet.
+</p>
+
         </section>
     </main>
 
     <footer>
-        <p>Campus Life Planner - Helping students stay organized.</p>
+        <p>Campus Life Planner — Plan your tasks, manage your time.</p>
     </footer>
 
     <script type="module" src="scripts/main.js"></script>

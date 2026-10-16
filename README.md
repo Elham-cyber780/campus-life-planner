@@ -1,52 +1,125 @@
-# campus-life-planner
 # Campus Life Planner
 
-A responsive, accessible task and event planner built with vanilla HTML, CSS and JavaScript.
+A task and event planner built with vanilla HTML, CSS, and JavaScript. Campus Life Planner helps students organize tasks, track deadlines, estimate task durations, and group activities using tags.
 
-**Live site:** https://elham-cyber780.github.io/campus-life-planner/
-**GitHub:** https://github.com/Elham-cyber780
-**Email:** e.abdulrahm@alustudent.com 
+**Live site:** https://elham-cyber780.github.io/campus-life-planner/  
+**GitHub repository:** https://github.com/Elham-cyber780/campus-life-planner
 
 ## Theme
-Campus Life Planner: track tasks and events with a due date, a duration and a tag.
 
-## Wireframes
-- `assets/wireframe-mobile.jpg`
-- `assets/wireframe-desktop.jpg`
-
-## Data model
-Each record is stored in localStorage and in `seed.json`:
-
-| Field | Type | Example |
-|---|---|---|
-| id | string | "task_0001" |
-| title | string | "Submit the HR application" |
-| dueDate | string (YYYY-MM-DD) | "2026-10-18" |
-| duration | number (minutes) | 120 |
-| tag | string | "Admin" |
-| createdAt | ISO timestamp | "2026-10-10T09:30:00.000Z" |
-| updatedAt | ISO timestamp | "2026-10-10T09:30:00.000Z" |
-
-## Accessibility plan
-- Semantic landmarks: header, nav, main, section, footer, with one h1 and a logical heading order.
-- A skip-to-content link as the first focusable element.
-- Every form input has a label linked with for/id.
-- A visible focus style on every interactive element.
-- Every feature (add, edit, delete, sort, search, settings) works with the keyboard alone.
-- Messages use role="status" or aria-live. The weekly cap message is polite when under the cap and assertive when exceeded.
-- Text colour contrast of at least 4.5:1.
-- Search matches are highlighted with `<mark>`.
-- Mobile-first layout with breakpoints near 360px, 768px and 1024px.
-- Animations respect `prefers-reduced-motion`.
+Campus Life Planner supports student productivity by keeping task information organized in one place. Each task has a title, due date, estimated duration in minutes, and tag.
 
 ## Features
-(coming soon)
 
-## Regex catalog
-(coming soon)
+- **Task management:** Add, edit, and delete tasks.
+- **Dashboard:** View the total number of records, combined task duration, most-used tag, and a seven-day task-creation summary.
+- **Search:** Search task titles and tags using regular expressions.
+- **Search highlighting:** Highlight matching text in task titles and tags.
+- **Sorting:** Sort records by due date, title, or duration in ascending or descending order.
+- **Form validation:** Validate titles, dates, durations, and tags before saving.
+- **Browser storage:** Save records in `localStorage` so they can persist between visits in the same browser.
+- **Sample data:** Load initial records from `seed.json` when suitable saved records are unavailable.
+- **Accessibility:** Use semantic HTML, labelled form controls, keyboard-focus indicators, and status messages.
 
-## Keyboard map
-(coming soon)
+**Not yet verified:** JSON file import/export and responsive behavior at all required breakpoints. Confirm these features before describing them as complete.
 
-## How to run tests
-(coming soon)
+## Technologies
+
+- HTML5
+- CSS3
+- Vanilla JavaScript using ES modules
+- Browser `localStorage`
+- JSON for sample data
+
+## Project structure
+
+- `index.html` — Page structure and task-management interface.
+- `styles/main.css` — Page styling and responsive layout.
+- `scripts/main.js` — Application state, task management, validation, dashboard, sorting, and rendering.
+- `scripts/storage.js` — Browser storage functions.
+- `scripts/search.js` — Regular-expression compilation for search.
+- `scripts/validators.js` — Regular-expression patterns used for form validation.
+- `seed.json` — Sample task records.
+- `tests.html` — Test page, if applicable to the current implementation.
+- `assets/` — Project wireframes and visual assets.
+
+## Data model
+
+Each task record contains the following fields:
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | String | Unique task identifier |
+| `title` | String | Task title |
+| `dueDate` | String | Due date in `YYYY-MM-DD` format |
+| `duration` | Number | Estimated duration in minutes |
+| `tag` | String | Category or label |
+| `createdAt` | String | Creation timestamp in ISO format |
+| `updatedAt` | String | Last-update timestamp in ISO format |
+
+Sample records are stored in `seed.json`. User records are saved in browser `localStorage`.
+
+## Regular-expression catalog
+
+The application uses regular expressions to validate input and support search.
+
+| Pattern | Purpose |
+|---|---|
+| `titlePattern` | Rejects leading, trailing, and consecutive ordinary spaces |
+| `numberPattern` | Accepts non-negative integers and decimals with up to two decimal places |
+| `datePattern` | Checks date format and basic month/day ranges |
+| `tagPattern` | Allows letters separated by single spaces or hyphens |
+| `duplicateWordPattern` | Detects consecutive repeated words, ignoring case |
+| `compileRegex()` | Safely attempts to compile a user-provided search pattern and handles invalid expressions |
+
+The date validator also checks whether a date exists on the calendar, since a regular expression alone cannot validate every calendar date.
+
+## Accessibility
+
+The project includes:
+
+- Semantic page landmarks and a logical heading structure.
+- A skip-to-content link.
+- Labels associated with form controls.
+- Visible keyboard-focus indicators.
+- Accessible status messages for search and form feedback.
+- Search highlighting created with text nodes and `<mark>` elements rather than inserting user search input as HTML.
+
+Further accessibility checks should verify color contrast, keyboard operation, reduced-motion preferences, and the weekly summary's screen-reader experience.
+
+## Getting started
+
+1. Clone or download the project repository.
+2. Open the project folder in a code editor.
+3. Serve the project using a local development server.
+4. Open `index.html` through that server so the JavaScript modules and `seed.json` can load correctly.
+5. Add a task and refresh the page to check whether it remains saved.
+
+Opening the project through a local server is recommended instead of opening the HTML file directly.
+
+## Testing checklist
+
+Before submission, verify the following manually:
+
+- Add a task with valid information.
+- Reject invalid titles, dates, durations, and tags.
+- Try an impossible calendar date such as `2026-02-31`.
+- Edit a task and confirm that the existing record is updated.
+- Delete a task and confirm that it disappears.
+- Refresh the page and check persistence.
+- Sort by each available field in both directions.
+- Search for a matching title or tag.
+- Enter an invalid regular expression and confirm that the application displays an error rather than crashing.
+- Confirm that search highlighting matches the results.
+- Test the page at mobile, tablet, and desktop widths.
+- Test keyboard navigation and visible focus indicators.
+
+## Known limitations
+
+JSON file import/export has not yet been verified. Responsive breakpoints, reduced-motion behavior, and the full accessibility experience also require testing before they can be reported as complete.
+
+## Author
+
+Abdul Rahman Elham Wumpini
+
+GitHub: https://github.com/Elham-cyber780
