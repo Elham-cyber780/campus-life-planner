@@ -20,21 +20,35 @@ header {
     padding: 16px;
 }
 
-/* Style the navigation links */
-nav a {
-    color: #ffffff;
-    padding: 8px;
+header h1 {
+    margin-top: 0;
 }
 
-/* Arrange navigation links in a wrapping row */
+/* Style the navigation links */
 nav {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
+nav a {
+    display: inline-block;
+    color: #ffffff;
+    padding: 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s ease,
+                color 0.2s ease;
+}
+
+nav a:hover {
+    background-color: #334155;
+    text-decoration: underline;
+}
+
 /* Centre the main content */
 main {
+    width: 100%;
     max-width: 1000px;
     margin: 0 auto;
     padding: 16px;
@@ -46,6 +60,62 @@ section {
     padding: 16px;
     margin-bottom: 16px;
     border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease;
+}
+
+section:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Make form controls fit the screen */
+input,
+select,
+textarea,
+button {
+    max-width: 100%;
+    font: inherit;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+}
+
+button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: #1e293b;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #334155;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Keep tables usable on small screens */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    text-align: left;
+    overflow-wrap: anywhere;
 }
 
 /* Make keyboard focus clearly visible */
@@ -58,3 +128,63 @@ textarea:focus-visible {
     outline-offset: 3px;
 }
 
+/* Footer */
+footer {
+    padding: 16px;
+    text-align: center;
+}
+
+/* Breakpoint 1: small mobile screens */
+@media (min-width: 480px) {
+    header,
+    main,
+    footer {
+        padding: 20px;
+    }
+
+    section {
+        padding: 20px;
+    }
+}
+
+/* Breakpoint 2: tablets */
+@media (min-width: 768px) {
+    header {
+        padding: 24px;
+    }
+
+    nav {
+        gap: 16px;
+    }
+
+    main {
+        padding: 24px;
+    }
+
+    section {
+        margin-bottom: 24px;
+    }
+}
+
+/* Breakpoint 3: desktop screens */
+@media (min-width: 1024px) {
+    main {
+        padding: 32px;
+    }
+
+    section {
+        padding: 24px;
+    }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
